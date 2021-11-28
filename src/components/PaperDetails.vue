@@ -72,7 +72,7 @@ export default {
   data() {
     return {
       title: "Datos del Articulo",
-      papers: {},
+      paper: {},
     };
   },
   mounted() {
