@@ -1,6 +1,6 @@
 <!-- BookDetails.vue -->
 <template>
-  <!--<div class="row">
+  <div class="row">
     <div class="eleven column" style="margin-top: 5%">
       <h2>{{ title }}</h2>
       <form>
@@ -59,8 +59,7 @@
         </div>
       </form>
     </div>
-  </div>-->
-  <h1>Holiwis</h1>
+  </div>
 </template>
 
 <script>
@@ -100,7 +99,7 @@ export default {
       })
         .then((response) => response.json())
         .then((items) => {
-          console.log("initial i" + tems[0]);
+          console.log("initial i" + items[0]);
           this.paper = items[0];
         });
     },
