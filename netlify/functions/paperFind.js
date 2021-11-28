@@ -4,21 +4,22 @@ const mongoPromise = require('./mongoDB');
 
 const headers = require('./headersCORS');
 
-exports.handler = async (event, context) => {
+exports.handler = async(event, context) => {
 
-  if (event.httpMethod == "OPTIONS") {
-     return { statusCode: 200, headers, body: "OK" };
-  }
-	
-  try {
-    const client = await mongoPromise;
-    const id = parseInt(event.path.split("/").reverse()[0]);
-    const papers = 
-	  await client.db("articles").collection("papers").find({_id:id}).toArray();
+    if (event.httpMethod == "OPTIONS") {
+        return { statusCode: 200, headers, body: "OK" };
+    }
 
-    return { statusCode: 200, headers, body: JSON.stringify(papers)};
-  } catch (error) {
-    console.log(error);
-    return { statusCode: 400, headers, body: JSON.stringify(error) };
-  }
+    try {
+        const client = await mongoPromise;
+        const id = parseInt(event.path.split("/").reverse()[0]);
+        var o_id = new mongoPromise.ObjectID(id);
+        const papers =
+            await client.db("articles").collection("papers").find({ _id: o_id }).toArray();
+
+        return { statusCode: 200, headers, body: JSON.stringify(papers) };
+    } catch (error) {
+        console.log(error);
+        return { statusCode: 400, headers, body: JSON.stringify(error) };
+    }
 };
