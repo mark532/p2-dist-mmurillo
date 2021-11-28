@@ -46,14 +46,14 @@
             v-if="edit"
             class="button button-primary"
             style="float: right"
-            v-on:click="updateBook(paper._id)"
+            v-on:click="updatePaper(paper._id)"
             >Update</a
           >
           <a
             v-if="create"
             class="button button-primary"
             style="float: right"
-            v-on:click="createBook()"
+            v-on:click="createPaper()"
             >Create</a
           >
         </div>
