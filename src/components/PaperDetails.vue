@@ -72,13 +72,16 @@ export default {
     return {
       //title: "Datos del Articulo",
       paper: {},
+      maximo:{}
     };
   },
   mounted() {
     const route = useRoute();
     console.log(route.params.id);
-    if (route.params.id != null || route.params.id != undefined)
+    if (route.params.id != null || route.params.id != undefined){
       this.findPaper(route.params.id);
+      this.getMaxId();
+    }  
     else {
       this.paper = {
         _id: Math.floor(Math.random() * 100000000),
@@ -89,7 +92,8 @@ export default {
         pages: 0,
         author: "",
         url: "",
-        b64:""
+        b64:"",
+        iden:0
       };
     }
   },
@@ -104,8 +108,18 @@ export default {
           this.paper = items[0];
         });
     },
+    getMaxId: function (){
+      fetch(this.url + "/.netlify/functions/maxPaper", {
+        headers: { Accept: "application/json" },
+      })
+        .then((response) => response.json())
+        .then((items) => {
+          console.log("initial i" + items[0]);
+          this.maximo = items[0];
+        });
+    },
     updatePaper: function (id) {
-      fetch(this.url + "/.netlify/functions/paperUpdate/" + id, {
+      fetch(this.url + "/.netlify/functions/paperUpdateBatch/" + id, {
         headers: { "Content-Type": "application/json" },
         method: "PUT",
         body: JSON.stringify(this.paper),
@@ -114,7 +128,8 @@ export default {
       });
     },
     createPaper: function () {
-      fetch(this.url + "/.netlify/functions/paperInsert", {
+      this.paper.iden = (this.maximo.iden+1);
+      fetch(this.url + "/.netlify/functions/paperInsertBatch", {
         headers: { "Content-Type": "application/json" },
         method: "POST",
         body: JSON.stringify(this.paper),

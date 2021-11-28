@@ -11,7 +11,7 @@ exports.handler = async(event, context) => {
 
     try {
         const client = await clientPromise;
-        const papers = await client.db("articles").collection("papers").sort({ id: -1 }).limit(1);
+        const papers = await client.db("articles").collection("papers").sort({ iden: -1 }).limit(1);
         return { statusCode: 200, headers, body: JSON.stringify(papers) };
     } catch (error) {
         console.log(error);
