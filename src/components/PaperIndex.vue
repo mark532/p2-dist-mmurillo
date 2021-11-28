@@ -20,7 +20,7 @@
             <td>{{ paper.pages }}</td>
             <td>{{ paper.copyright }}</td>
             <td>
-              <router-link class="button" :to="'/paper/show/' + paper._id"
+              <router-link class="button" :to="'/paper/show/' + paper.iden"
                 >Ver</router-link
               >
               &nbsp;
