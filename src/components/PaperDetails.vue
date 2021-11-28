@@ -92,8 +92,7 @@ export default {
         pages: 0,
         author: "",
         url: "",
-        b64:"",
-        iden:0
+        b64:""
       };
     }
   },
@@ -128,7 +127,6 @@ export default {
       });
     },
     createPaper: function () {
-      this.paper.iden = (this.maximo.iden+1);
       fetch(this.url + "/.netlify/functions/paperInsertBatch", {
         headers: { "Content-Type": "application/json" },
         method: "POST",

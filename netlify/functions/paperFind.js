@@ -14,7 +14,7 @@ exports.handler = async(event, context) => {
         const client = await mongoPromise;
         const id = parseInt(event.path.split("/").reverse()[0]);
         const papers =
-            await client.db("articles").collection("papers").find({ iden: id }).toArray();
+            await client.db("articles").collection("papers").find({ _id: id }).toArray();
 
         return { statusCode: 200, headers, body: JSON.stringify(papers) };
     } catch (error) {
