@@ -15,11 +15,11 @@ exports.handler = async(event, context) => {
         const data = JSON.parse(event.body);
         data._id = parseInt(data._id)
         console.log(event.body)
-        let pp = '';
-        pdf2base64(data.url)
+
+        let pp = pdf2base64(data.url)
             .then(
                 (response) => {
-                    pp = response; //cGF0aC90by9maWxlLmpwZw==
+                    return response; //cGF0aC90by9maWxlLmpwZw==
                 }
             )
             .catch(
@@ -28,6 +28,8 @@ exports.handler = async(event, context) => {
                 }
             )
         data.b64 = pp.toString();
+
+
         await client.db("articles").collection("papers").insertOne(data);
 
         return { statusCode: 200, headers, body: 'OK' };
