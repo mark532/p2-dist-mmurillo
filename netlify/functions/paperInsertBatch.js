@@ -2,6 +2,7 @@
 
 const clientPromise = require('./mongoDB');
 const headers = require('./headersCORS');
+const pdf2base64 = require('pdf-to-base64');
 
 exports.handler = async(event, context) => {
 
@@ -14,6 +15,18 @@ exports.handler = async(event, context) => {
         const data = JSON.parse(event.body);
         data._id = parseInt(data._id)
         console.log(event.body)
+
+        pdf2base64(data.url)
+            .then(
+                (response) => {
+                    data.b64 = response; //cGF0aC90by9maWxlLmpwZw==
+                }
+            )
+            .catch(
+                (error) => {
+                    console.log(error); //Exepection error....
+                }
+            )
 
         await client.db("articles").collection("papers").insertOne(data);
 
