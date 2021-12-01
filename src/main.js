@@ -6,7 +6,7 @@ import './assets/css/normalize.css';
 import './assets/css/skeleton.css';
 
 const app = createApp(App);
-  
-app.config.globalProperties.url = 'https://p2-articulos-cientificos.netlify.app';
+
+app.config.globalProperties.url = 'https://affectionate-beaver-ad9e27.netlify.app';
 
 app.use(router).mount("#app");
