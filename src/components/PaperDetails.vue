@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="row"  v-if="show">
-          <iframe :src="paper.url" frameborder="0" width="100%" height="500px" type="application/pdf"/>
+          <iframe :src="paper.b64" frameborder="0" width="100%" height="500px" type="application/pdf"/>
         </div>
         <div class="row">
           <router-link class="button button-primary" to="/paper"
