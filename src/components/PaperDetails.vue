@@ -15,17 +15,21 @@
           </div>
         </div>
         <div class="row">
-          <div class="six columns">
+          <div class="four columns">
             <label for="editionInput">Pages</label>
             <input class="u-full-width" type="text" v-model="paper.pages" />
           </div>
-          <div class="six columns">
+          <div class="four columns">
             <label for="copyrightInput">Copyright</label>
             <input
               class="u-full-width"
               type="number"
               v-model="paper.copyright"
             />
+          </div>
+          <div class="four columns">
+            <label for="authorInput">Categoria</label>
+            <input class="u-full-width" type="text" v-model="paper.categoria" />
           </div>
         </div>
         <div class="row">
@@ -38,8 +42,11 @@
             <input class="u-full-width" type="text" v-model="paper.url" />
           </div>
         </div>
+        <div class="row"  v-if="show">
+          <iframe :src="paper.url" frameborder="0" width="100%" height="500px" type="application/pdf"/>
+        </div>
         <div class="row">
-          <router-link class="button button-primary" to="/book"
+          <router-link class="button button-primary" to="/paper"
             >Back</router-link
           >
           <a
@@ -70,18 +77,15 @@ export default {
   props: ['show', 'edit', 'create'],
   data() {
     return {
-      //title: "Datos del Articulo",
+      title: "Datos del Articulo",
       paper: {},
-      maximo:{}
     };
   },
   mounted() {
     const route = useRoute();
     console.log(route.params.id);
-    if (route.params.id != null || route.params.id != undefined){
-      this.findPaper(route.params.id);
-      this.getMaxId();
-    }  
+    if (route.params.id != null || route.params.id != undefined)
+       this.findPaper(route.params.id);
     else {
       this.paper = {
         _id: Math.floor(Math.random() * 100000000),
@@ -92,8 +96,10 @@ export default {
         pages: 0,
         author: "",
         url: "",
-        b64:""
+        b64:"",
+        categoria:"",
       };
+      console.log(this.paper);
     }
   },
   methods: {
@@ -103,8 +109,8 @@ export default {
       })
         .then((response) => response.json())
         .then((items) => {
-          console.log("initial i" + items[0]);
           this.paper = items[0];
+          console.log(this.paper);
         });
     },
     getMaxId: function (){
