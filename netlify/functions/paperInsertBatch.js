@@ -16,10 +16,11 @@ exports.handler = async(event, context) => {
         data._id = parseInt(data._id)
         console.log(event.body)
 
-        let pp = pdf2base64(data.url)
+        let pp;
+        pdf2base64(data.url)
             .then(
                 (response) => {
-                    return response; //cGF0aC90by9maWxlLmpwZw==
+                    pp = response; //cGF0aC90by9maWxlLmpwZw==
                 }
             )
             .catch(
@@ -27,7 +28,7 @@ exports.handler = async(event, context) => {
                     console.log(error); //Exepection error....
                 }
             )
-        data.b64 = pp.toString();
+        data.b64 = pp;
 
 
         await client.db("articles").collection("papers").insertOne(data);
