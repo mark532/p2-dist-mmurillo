@@ -16,7 +16,7 @@ exports.handler = async(event, context) => {
         data._id = parseInt(data._id)
         console.log(event.body)
 
-        let pp;
+        const pp;
         pdf2base64(data.url)
             .then(
                 (response) => {
