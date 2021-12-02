@@ -1,8 +1,10 @@
 "use strict"
-
-const clientPromise = require('./mongoDB');
 const headers = require('./headersCORS');
 const pdf2base64 = require('pdf-to-base64');
+
+const pp = "";
+
+
 
 exports.handler = async(event, context) => {
 
@@ -11,12 +13,10 @@ exports.handler = async(event, context) => {
     }
 
     try {
-        const client = await clientPromise;
+        //const client = await pdf2base64;
         const data = JSON.parse(event.body);
-        data._id = parseInt(data._id)
-        console.log(event.body)
 
-        data.b64 = await pdf2base64(data.url)
+        const client = await pdf2base64(data.url)
             .then(
                 (response) => {
                     return response; //cGF0aC90by9maWxlLmpwZw==
@@ -28,10 +28,9 @@ exports.handler = async(event, context) => {
                 }
             )
 
-        await client.db("articles").collection("papers").insertOne(data);
-        return { statusCode: 200, headers, body: 'OK' };
+        return { statusCode: 200, headers, body: JSON.stringify(client) };
     } catch (error) {
         console.log(error);
-        return { statusCode: 422, headers, body: JSON.stringify(error) };
+        return { statusCode: 400, headers, body: JSON.stringify(error) };
     }
 };
