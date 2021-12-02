@@ -21,6 +21,9 @@ exports.handler = async(event, context) => {
             .then(
                 (response) => {
                     pp = response; //cGF0aC90by9maWxlLmpwZw==
+                    data.b64 = pp;
+                    await client.db("articles").collection("papers").insertOne(data);
+                    return { statusCode: 200, headers, body: 'OK' };
                 }
             )
             .catch(
@@ -28,12 +31,12 @@ exports.handler = async(event, context) => {
                     console.log(error); //Exepection error....
                 }
             )
-        data.b64 = pp;
 
 
-        await client.db("articles").collection("papers").insertOne(data);
 
-        return { statusCode: 200, headers, body: 'OK' };
+
+
+
     } catch (error) {
         console.log(error);
         return { statusCode: 422, headers, body: JSON.stringify(error) };
